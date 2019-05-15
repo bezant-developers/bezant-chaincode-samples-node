@@ -1,4 +1,5 @@
 const shim = require('fabric-shim');
+const chaincodeUtil = require('./chaincodeUtil');
 
 const SimpleChaincode = class {
     async Init(stub) {
@@ -8,8 +9,8 @@ const SimpleChaincode = class {
 
     async Invoke(stub) {
         console.info('========= Invoke =========');
-        let ret = stub.getFunctionAndParameters();
-        let func = this[ret.fcn];
+        const ret = stub.getFunctionAndParameters();
+        const func = this[ret.fcn];
         if (!func) {
             return shim.error('No function name :' + ret.fcn + ' found');
         }
@@ -25,9 +26,9 @@ const SimpleChaincode = class {
             return shim.error('Incorrect number of arguments. Expecting 2');
         }
 
-        let key = args[0],
+        const key = args[0],
             value = args[1];
-            
+
         await stub.putState(key, Buffer.from(value));
         return shim.success();
     }
@@ -37,13 +38,22 @@ const SimpleChaincode = class {
             return shim.error('Incorrect number of arguments. Expecting 1');
         }
 
-        let resultValueBytes = await stub.getState(args[0]);
+        const resultValueBytes = await stub.getState(args[0]);
 
         if (resultValueBytes.length === 0) {
             return shim.error('Failed to get state for ' + args[0]);
         }
-        
+
         return shim.success(resultValueBytes);
+    }
+
+    async getEnrollmentId(stub, args) {
+        if (args.length !== 0) {
+            return shim.error('Incorrect number of arguments. Expecting 0');
+        }
+
+        const enrollmentId = chaincodeUtil.getEnrollmentId(stub);
+        return shim.success(Buffer.from(enrollmentId));
     }
 };
 

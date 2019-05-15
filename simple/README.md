@@ -98,5 +98,37 @@ shim.start(new SimpleChaincode());
 
 ## Compress nodejs files cli
 ``` console
-zip -r chaincode.zip package.json simpleChaincode.js
+zip -r chaincode.zip package.json simpleChaincode.js chaincodeUtil.js
+```
+
+## Local environment test
+[bezant-chaincode-test-network link](https://github.com/bezant-developers/bezant-chaincode-test-network)
+
+``Put``
+```bash
+docker exec cli peer chaincode invoke -o orderer.example.com:7050 -C bezant-channel -n simple-node --peerAddresses peer0.bezant.example.com:7051 -c '{"Args":["put", "a", "10"]}'
+```
+
+``Get``
+```bash
+docker exec cli peer chaincode query -C bezant-channel -n simple-node --peerAddresses peer0.bezant.example.com:7051 -c '{"Args":["get", "a"]}'
+```
+
+``Get enrollmentId``
+```bash
+docker exec cli peer chaincode query -C bezant-channel -n simple-node --peerAddresses peer0.bezant.example.com:7051 -c '{"Args":["getEnrollmentId"]}'
+```
+
+``Instantiate``
+```bash
+docker exec cli peer chaincode install -n simple-node -v 1.0 -l node -p /opt/gopath/src/simple-node
+docker exec cli2 peer chaincode install -n simple-node -v 1.0 -l node -p /opt/gopath/src/simple-node                                                                                            
+docker exec cli peer chaincode instantiate -o orderer.example.com:7050 -C bezant-channel -n simple-node -v 1.0 -c '{"Args":["init"]}'               
+```
+
+``Upgrade``
+```bash
+docker exec cli peer chaincode install -n simple-node -v 1.1 -l node -p /opt/gopath/src/simple-node
+docker exec cli2 peer chaincode install -n simple-node -v 1.1 -l node -p /opt/gopath/src/simple-node                                                                                            
+docker exec cli peer chaincode upgrade -o orderer.example.com:7050 -C bezant-channel -n simple-node -v 1.1 -c '{"Args":["init"]}'               
 ```
