@@ -47,10 +47,15 @@ const SimpleChaincode = class {
         return shim.success(resultValueBytes);
     }
 
-    async getEnrollmentId(stub, args) {
-        if (args.length !== 0) {
-            return shim.error('Incorrect number of arguments. Expecting 0');
+    async putAndGetEnrollmentId(stub, args) {
+        if (args.length !== 2) {
+            return shim.error('Incorrect number of arguments. Expecting 2');
         }
+
+        const key = args[0],
+            value = args[1];
+
+        await stub.putState(key, Buffer.from(value));
 
         const enrollmentId = chaincodeUtil.getEnrollmentId(stub);
         return shim.success(Buffer.from(enrollmentId));
