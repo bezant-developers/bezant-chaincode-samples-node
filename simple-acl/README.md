@@ -1,5 +1,8 @@
-# `Nodejs Chaincode` simple code
-This tutorial will explain how to write `Hyperledger Fabric` chain code based on `Nodejs`
+# `Nodejs Chaincode` simple-acl code
+This tutorial will explain how to write `Hyperledger Fabric` chain code based on `Nodejs` with acl feature.
+The identity who instantiate a chaincode becomes an admin, and each identity can access their asset.
+Admin can access to any asset.
+                            
 
 # Environment
 + `Nodejs`
