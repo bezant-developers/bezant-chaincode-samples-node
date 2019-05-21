@@ -47,19 +47,20 @@ const SimpleChaincode = class {
         return shim.success(resultValueBytes);
     }
 
-    async putAndGetEnrollmentId(stub, args) {
-        if (args.length !== 2) {
-            return shim.error('Incorrect number of arguments. Expecting 2');
+    async putByWalletAddress(stub, args) {
+        if (args.length !== 1) {
+            return shim.error('Incorrect number of arguments. Expecting 1');
         }
 
-        const key = args[0],
-            value = args[1];
+        const walletAddress = chaincodeUtil.getWalletAddress(stub);
+
+        const key = walletAddress,
+            value = args[0];
 
         await stub.putState(key, Buffer.from(value));
-
-        const enrollmentId = chaincodeUtil.getEnrollmentId(stub);
-        return shim.success(Buffer.from(enrollmentId));
+        return shim.success();
     }
+
 };
 
 shim.start(new SimpleChaincode());
