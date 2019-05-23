@@ -61,7 +61,8 @@ docker exec cli peer chaincode query -C bezant-channel -n simple-acl-node --peer
 
 
 ``Instantiate``
-When instantiating, this sets the invoker's address as the value of the key for 'Admin'.
+
+When instantiating, it sets the invoker's address as the value of the key for 'Admin' in init function.
 ```bash
 docker exec cli peer chaincode install -n simple-acl-node -v 1.0 -l node -p /opt/gopath/src/simple-acl-node
 docker exec cli2 peer chaincode install -n simple-acl-node -v 1.0 -l node -p /opt/gopath/src/simple-acl-node                                                                                            
