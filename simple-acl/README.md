@@ -1,8 +1,9 @@
 # `Nodejs Chaincode` simple-acl code
-This tutorial will explain how to write `Hyperledger Fabric` chain code based on `Nodejs` with acl feature.
-The identity who instantiate a chaincode becomes an admin, and each identity can access their asset.
-Admin can access to any asset.
-This is just one example. You can code acl feature in many ways.
+This tutorial will explain how to write `Hyperledger Fabric` chaincode based on `Nodejs` with the ACL(Acces Control List) feature.
+The identity who instantiates a chaincode becomes the Admin and each identity can access their asset.
+The Admin can access any asset.
+
+This is just one example. You can code the ACL feature in many ways.
                             
 # Environment
 + `Nodejs`
@@ -10,7 +11,7 @@ This is just one example. You can code acl feature in many ways.
 
 ```
 
-Start the chaincode process and listen for incoming endorsement requests
+This starts the chaincode process and listens for incoming endorsement requests
 ```js
 shim.start(new SimpleACL());
 ```
@@ -29,11 +30,10 @@ There are two examples in ``simple-acl chaincode``
 1) put and get
 2) put2 and get2
 
-you can choose either way to implement user acl feature, or you can choose other ways if you have something in mind.
+You can choose either way to implement the user ACL feature or implement your own way to do it.
  
 
-1. sets key as the invoker's address in put function, and no parameters in get function.
-   parses the invoker's address from the certificate and use it.
+1. Sets the key as the invoker's address in put function and in the get function, parses the invoker's address from the certificate to use it.
   
 ``put``
 ```bash
@@ -45,8 +45,8 @@ docker exec cli peer chaincode invoke -o orderer.example.com:7050 -C bezant-chan
 docker exec cli peer chaincode query -C bezant-channel -n simple-acl-node --peerAddresses peer0.bezant.example.com:7051 -c '{"Args":["get"]}'
 ```
 
-2. It sets key as the invoker's address on the above example, , but in this functions we set key with provided parameter and it sets the invoker's address as a value.
-   It checks the invoker's address is the same as the address stored through put2 function in get2 function. 
+2. Sets the key as the invoker's address on the example above, but in this function the key is set by the provided parameter where it sets the invoker's address as a value.
+   This checks the if invoker's address is the same as the address stored through put2 function in get2 function. 
    
 ``put2``
 ```bash
@@ -61,7 +61,7 @@ docker exec cli peer chaincode query -C bezant-channel -n simple-acl-node --peer
 
 
 ``Instantiate``
-When instantiating, it sets the invoker's address as the value of the key for 'Admin'.
+When instantiating, this sets the invoker's address as the value of the key for 'Admin'.
 ```bash
 docker exec cli peer chaincode install -n simple-acl-node -v 1.0 -l node -p /opt/gopath/src/simple-acl-node
 docker exec cli2 peer chaincode install -n simple-acl-node -v 1.0 -l node -p /opt/gopath/src/simple-acl-node                                                                                            
