@@ -25,6 +25,12 @@ zip -r chaincode.zip package.json simpleACL.js chaincodeUtil.js
 
 
 ## Function explanation
+There are two examples in ``simple-acl chaincode``
+1) put and get
+2) put2 and get2
+
+you can choose either way to implement user acl feature, or you can choose other ways if you have something in mind.
+ 
 
 1. sets key as the invoker's address in put function, and no parameters in get function.
    parses the invoker's address from the certificate and use it.
@@ -39,7 +45,7 @@ docker exec cli peer chaincode invoke -o orderer.example.com:7050 -C bezant-chan
 docker exec cli peer chaincode query -C bezant-channel -n simple-acl-node --peerAddresses peer0.bezant.example.com:7051 -c '{"Args":["get"]}'
 ```
 
-2. The above example, it sets key as the invoker's address, but in this functions we set key with provided parameter and it sets the invoker's address as a value.
+2. It sets key as the invoker's address on the above example, , but in this functions we set key with provided parameter and it sets the invoker's address as a value.
    It checks the invoker's address is the same as the address stored through put2 function in get2 function. 
    
 ``put2``
