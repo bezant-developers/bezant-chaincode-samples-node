@@ -5,26 +5,6 @@ The Admin can access any asset.
 
 This is just one example. You can code the ACL feature in many ways.
                             
-# Environment
-+ `Nodejs`
-+ `Hyperledger Fabric`
-
-```
-
-This starts the chaincode process and listens for incoming endorsement requests
-```js
-shim.start(new SimpleACL());
-```
-
-## Compress nodejs files cli
-``` console
-zip -r chaincode.zip package.json simpleACL.js chaincodeUtil.js
-```
-
-## Local environment test
-[bezant-chaincode-test-network link](https://github.com/bezant-developers/bezant-chaincode-test-network)
-
-
 ## Function explanation
 There are two examples in ``simple-acl chaincode``
 1) put and get
